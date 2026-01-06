@@ -1,0 +1,287 @@
+% Preamble 
+
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+ \usepackage{listings}
+ \usepackage{xcolor}
+\usepackage[T1]{fontenc}
+
+\lstdefinestyle{pyNontrivial}{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries\color{blue!70!black},
+  stringstyle=\color{teal!60!black},
+  commentstyle=\itshape\color{gray!70!black},
+  numberstyle=\tiny\color{gray!70!black},
+  numbers=left,
+  stepnumber=1,
+  numbersep=8pt,
+  showstringspaces=false,
+  tabsize=4,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  frame=single,
+  rulecolor=\color{gray!35},
+  frameround=tttt,
+  upquote=true,
+  keepspaces=true,
+  aboveskip=0.8em,
+  belowskip=0.8em,
+  xleftmargin=2em,
+  framexleftmargin=1.6em,
+  % A few extra Python-ish keywords
+  morekeywords={dataclass,field,Protocol,TypedDict,Literal,Self,override},
+  % Inline "callout" highlighting with |...|
+  escapeinside={(*@}{@*)},
+}
+
+
+
+
+% Actual Document Begjns Here
+
+\begin{document}
+
+\section{System Overview}
+
+TODO: Provide overview of the system and what it does..mention Perpetuals and Lendjng Market.
+
+\section{Agent Actions}
+
+\subsection{Perpetuals Market}
+
+NOTE: formatting? bold actions? 
+
+Agents can: 
+\begin{itemize}
+	\item create some \textit{quantity} of a tokenized short A-PERP position at a specific price, where A is an approved asset. To do so, the Agent must provide sufficient \textit{margin} in some asset. Quantity is decided by the system, based on specified price and margin.
+	\item offer tokenized short A-PERP position for sale
+	\item buy offered tokenized A-PERP position, taking coubterparty long position
+	\item liquidate a tokenized A-PERP position thst meets perpetual liquidation conditions
+\end{itemize}
+
+\subsection{Lending Market}
+
+Agents can: 
+\begin{itemize}
+	\item borrow: initiate a loan to obtain some quantity of  a value asset, after providing some quantity of an approved collateral asset 
+	\item repay some or all of an existing loan
+	\item liquidate an existing loan that meets a loan liquidation threshold
+\end{itemize}
+
+\section{System Decisions}
+
+System Decisions occur in response to Agent Actions. 
+
+\subsection{Perpetuals Market}
+
+\begin{itemize}
+	\item Based on an Agent's provided margin and specified price, the System must calculate the maximum amount of A-PERP tokend that the Agent is allowed to create. 
+	\item Based on size of an Agent's margin and position, as well as current price information, the System must deciede whether to liquidate all or part of the position. 
+\end{itemize}
+
+\subsection{Lending Market}
+\begin{itemize}
+	\item Based on Agent's provided collateral and its own current price information, the System must determine the largest amount of a value asset that it will lend the Agent. 
+	\item Based on the size of a loan and its backing collateral, the system must decide whether or not to liquidate that particular loan. 
+\end{itemize}
+
+\section{Decision Rules}
+
+This section gives more granular description and implementation details of the System Decisions. For ease of reading, we use a typed pseudocode for the description. 
+
+\subsection{System Parameters}
+
+\subsubsection*{Lending Market: Maintenance Margin Rate}
+
+Maintenance margin specifies the minimum equity the \textbf{SHORT} account must hold,
+expressed as a fixed fraction of the current price multiplied by \texttt{TokenAmount}.
+
+Let $r^A_{\mathrm{mm}} \in (0,1)$ denote the maintenance margin rate for an asset $A$.
+
+This requirement reflects how much loss the account must be able to absorb
+before liquidation is triggered.
+
+\subsubsection*{Lending Market: Loan-to-Value Rate}
+
+For a collateral asset $C$ and a value asset $V$, the Loan-to-Value ratio $\lambda_{C \rightarrow V}$  specifiesthe maximum amount of $V$ for a given quantity of $C$. 
+
+\subsection{System Functions}
+
+
+You said:
+Please generate a nontrivial Python lstlistings code for LaTeX. 
+ChatGPT said:
+% In your preamble:
+% \usepackage{listings}
+% \usepackage{xcolor}
+
+\lstdefinestyle{pyNontrivial}{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries\color{blue!70!black},
+  stringstyle=\color{teal!60!black},
+  commentstyle=\itshape\color{gray!70!black},
+  numberstyle=\tiny\color{gray!70!black},
+  numbers=left,
+  stepnumber=1,
+  numbersep=8pt,
+  showstringspaces=false,
+  tabsize=4,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  frame=single,
+  rulecolor=\color{gray!35},
+  frameround=tttt,
+  upquote=true,
+  keepspaces=true,
+  aboveskip=0.8em,
+  belowskip=0.8em,
+  xleftmargin=2em,
+  framexleftmargin=1.6em,
+  % A few extra Python-ish keywords
+  morekeywords={dataclass,field,Protocol,TypedDict,Literal,Self,override},
+  % Inline "callout" highlighting with |...|
+  escapeinside={(*@}{@*)},
+}
+
+\begin{lstlisting}[style=pyNontrivial,caption={Concurrent pipeline with caching, retries, and typed config},label={lst:pipeline}]
+from __future__ import annotations
+
+import asyncio
+import hashlib
+import json
+import os
+import random
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Awaitable, Callable, Dict, Iterable, List, Optional, Tuple
+
+Json = Dict[str, Any]
+
+
+@dataclass(frozen=True)
+class TaskSpec:
+    """A unit of work with deterministic caching keyed by (name, payload)."""
+    name: str
+    payload: Json
+    max_retries: int = 3
+    timeout_s: float = 2.5
+
+    def cache_key(self) -> str:
+        blob = json.dumps({"name": self.name, "payload": self.payload}, sort_keys=True).encode()
+        return hashlib.sha256(blob).hexdigest()
+
+
+\end{lstlistings}
+
+
+\section{System Events and Infrastructure}
+
+System Events occur on a regular cadence. 
+
+\begin{itemize}
+	\item Update asset prices, using available information from both internal and external markets. 
+	\item For all loans, make liquidation decisions. \item For all perpetual positions, make liquidation decisions. 
+\end{itemize}
+
+\section{System Security Properties}
+
+\subsection{Demand for Liquidation Assets} 
+
+Liquidations are crucial to mitigating bad debt in the system. The assets available in liquidations will be SHORT positions (in the perpetuals market) or collateral assets (in the lending market). If asset demand suddenly crashes, there may be no appetite for market demand regardless of the liquidation discount. 
+
+\subsection{Accuracy of Price Information}
+
+Many system decisions, including initiation of liquidation events, depend on token price. If the price used in calculation does not reflect the actual market demand, the system may make bad decisions that lead to insolvency. 
+\subsection{Perpetuals Market Solvency}
+
+Fix a single \textbf{SHORT} position of size $\texttt{TokenAmount}$ entered at price $p_0$
+with posted initial margin $m$ (all denominated in the common unit $\mathcal{U}$).
+
+After an oracle/mark update to $p_{\mathrm{new}}$, the \textbf{SHORT} equity is
+\[
+E_{\mathrm{SHORT}}(p_{\mathrm{new}})
+= m + \Pi_{\mathrm{SHORT}}
+= m + \texttt{TokenAmount}\,(p_0 - p_{\mathrm{new}}).
+\]
+
+The maintenance requirement is
+\[
+\mathrm{MaintenanceMargin}(\texttt{TokenAmount}, p_{\mathrm{new}})
+=
+r_{\mathrm{mm}} \cdot \texttt{TokenAmount} \cdot p_{\mathrm{new}}.
+\]
+
+\paragraph{Liquidation trigger.}
+Liquidation is triggered when
+\[
+E_{\mathrm{SHORT}}(p_{\mathrm{new}}) < \mathrm{MaintenanceMargin}(\texttt{TokenAmount}, p_{\mathrm{new}}).
+\]
+This condition can also be written as:
+\[
+m + \texttt{TokenAmount}\,(p_0 - p_{\mathrm{new}})
+<
+r_{\mathrm{mm}} \cdot \texttt{TokenAmount} \cdot p_{\mathrm{new}},
+\]
+or
+\[
+m
+<
+\texttt{TokenAmount}\left((1+r_{\mathrm{mm}})\,p_{\mathrm{new}} - p_0\right).
+\]
+
+In this regime, the shortfall
+\[
+D \;=\; -E_{\mathrm{SHORT}}(p_{\mathrm{new}})
+\;=\;
+\texttt{TokenAmount}\,(p_{\mathrm{new}} - p_0) - m
+\]
+must be absorbed or offset somehow (for example, by an insurance fund) to prevent the position becoming insolvent. 
+
+\paragraph{Interpretation.}
+The parameter $r_{\mathrm{mm}}$ controls how early liquidation occurs as $p_{\mathrm{new}}$ rises:
+larger $r_{\mathrm{mm}}$ increases $\mathrm{MaintenanceMargin}$ and triggers liquidation sooner.
+
+\paragraph{Relating $p_{\mathrm{new}}$ to oracle manipulation cost.}
+Here we interpret market ``depth'' in the cumulative sense most commonly reported by exchanges.
+
+Let $D(p)$ denote the \emph{cumulative depth function}, measured in the unit of account $\mathcal{U}$:
+$D(p)$ is the total amount of $\mathcal{U}$ that must be spent (via aggressive buys)
+to push the effective market price upward by $p\%$ from its current level.
+
+Define the required percentage move
+\[
+\Delta \% \;=\; 100\left(\frac{p_{\mathrm{new}}}{p_0}-1\right).
+\]
+
+The \emph{cost of attack}-the direct out-of-pocket cost to an adversary
+attempting to manipulate the oracle to price $p_{\mathrm{new}}$ is given by:
+\[
+\mathrm{Cost}_{\mathrm{attack}}(p_{\mathrm{new}}) \;=\; D(\Delta \%),
+\]
+expressed in $\mathcal{U}$.
+
+Combining the formula for cost-of-attack with the liquidation threshold
+\[
+p_{\mathrm{new}}
+>
+\frac{p_0 + m/\texttt{TokenAmount}}{1+r_{\mathrm{mm}}},
+\]
+shows that oracle manipulation is economically viable whenever the dollar cost
+$D(\Delta \%)$ is small relative to the losses imposed on the \textbf{SHORT} position
+and any value that can be extracted downstream.
+
+\subsection{Avoidance of Bad Debt in Lending Market}
+
+To avoid bad debt, collateral assets must not lose too much value too quickly. For this reason, it is a bad idea to allow loans backed by equity from perpetuals market positions. 
+
+Suppose we have a cumulative depth function $D_A(p)$ and a Loan-to-Value ratio $\lambda_A$ for an asset $A$. Bad debt occurs when  
+
+
+% TODO: Appendix
+
+\end{document}
+
