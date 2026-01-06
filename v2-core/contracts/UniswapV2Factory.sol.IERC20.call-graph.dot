@@ -1,0 +1,18 @@
+strict digraph {
+rankdir="LR"
+node [shape=box]
+subgraph cluster_1767_IERC20 {
+label = "IERC20"
+"1767_transfer" [label="transfer"]
+"1767_transferFrom" [label="transferFrom"]
+"1767_decimals" [label="decimals"]
+"1767_approve" [label="approve"]
+"1767_balanceOf" [label="balanceOf"]
+"1767_allowance" [label="allowance"]
+"1767_name" [label="name"]
+"1767_symbol" [label="symbol"]
+"1767_totalSupply" [label="totalSupply"]
+}subgraph cluster_solidity {
+label = "[Solidity]"
+}
+}

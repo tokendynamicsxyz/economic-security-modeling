@@ -1,0 +1,12 @@
+strict digraph {
+rankdir="LR"
+node [shape=box]
+subgraph cluster_1946_UQ112x112 {
+label = "UQ112x112"
+"1946_slitherConstructorConstantVariables" [label="slitherConstructorConstantVariables"]
+"1946_encode" [label="encode"]
+"1946_uqdiv" [label="uqdiv"]
+}subgraph cluster_solidity {
+label = "[Solidity]"
+}
+}

@@ -1,0 +1,61 @@
+strict digraph {
+rankdir="LR"
+node [shape=box]
+subgraph cluster_384_UniswapV2ERC20 {
+label = "UniswapV2ERC20"
+"384__burn" [label="_burn"]
+"384__transfer" [label="_transfer"]
+"384_constructor" [label="constructor"]
+"384__mint" [label="_mint"]
+"384_transfer" [label="transfer"]
+"384_approve" [label="approve"]
+"384_transferFrom" [label="transferFrom"]
+"384_permit" [label="permit"]
+"384__approve" [label="_approve"]
+"384_transfer" -> "384__transfer"
+"384_permit" -> "384__approve"
+"384_transferFrom" -> "384__transfer"
+"384_approve" -> "384__approve"
+}subgraph cluster_577_SafeMath {
+label = "SafeMath"
+"577_add" [label="add"]
+"577_mul" [label="mul"]
+"577_sub" [label="sub"]
+}subgraph cluster_502_IUniswapV2ERC20 {
+label = "IUniswapV2ERC20"
+"502_transferFrom" [label="transferFrom"]
+"502_DOMAIN_SEPARATOR" [label="DOMAIN_SEPARATOR"]
+"502_balanceOf" [label="balanceOf"]
+"502_symbol" [label="symbol"]
+"502_approve" [label="approve"]
+"502_nonces" [label="nonces"]
+"502_permit" [label="permit"]
+"502_name" [label="name"]
+"502_totalSupply" [label="totalSupply"]
+"502_decimals" [label="decimals"]
+"502_transfer" [label="transfer"]
+"502_allowance" [label="allowance"]
+"502_PERMIT_TYPEHASH" [label="PERMIT_TYPEHASH"]
+}subgraph cluster_solidity {
+label = "[Solidity]"
+"abi.encode()" 
+"keccak256(bytes)" 
+"ecrecover(bytes32,uint8,bytes32,bytes32)" 
+"require(bool,string)" 
+"abi.encodePacked()" 
+"384_permit" -> "keccak256(bytes)"
+"577_mul" -> "require(bool,string)"
+"384_permit" -> "ecrecover(bytes32,uint8,bytes32,bytes32)"
+"577_add" -> "require(bool,string)"
+"384_permit" -> "abi.encode()"
+"384_constructor" -> "keccak256(bytes)"
+"384_permit" -> "require(bool,string)"
+"384_permit" -> "abi.encodePacked()"
+"577_sub" -> "require(bool,string)"
+"384_constructor" -> "abi.encode()"
+}"384__transfer" -> "577_sub"
+"384_transferFrom" -> "577_sub"
+"384__burn" -> "577_sub"
+"384__transfer" -> "577_add"
+"384__mint" -> "577_add"
+}

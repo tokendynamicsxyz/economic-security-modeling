@@ -1,0 +1,34 @@
+strict digraph {
+rankdir="LR"
+node [shape=box]
+subgraph cluster_194_UniswapV2Factory {
+label = "UniswapV2Factory"
+"194_setFeeToSetter" [label="setFeeToSetter"]
+"194_allPairsLength" [label="allPairsLength"]
+"194_constructor" [label="constructor"]
+"194_createPair" [label="createPair"]
+"194_setFeeTo" [label="setFeeTo"]
+}subgraph cluster_1298_IUniswapV2Factory {
+label = "IUniswapV2Factory"
+"1298_setFeeTo" [label="setFeeTo"]
+"1298_feeTo" [label="feeTo"]
+"1298_allPairsLength" [label="allPairsLength"]
+"1298_allPairs" [label="allPairs"]
+"1298_getPair" [label="getPair"]
+"1298_setFeeToSetter" [label="setFeeToSetter"]
+"1298_createPair" [label="createPair"]
+"1298_feeToSetter" [label="feeToSetter"]
+}subgraph cluster_solidity {
+label = "[Solidity]"
+"require(bool,string)" 
+"type(address)" 
+"keccak256(bytes)" 
+"abi.encodePacked()" 
+"194_createPair" -> "keccak256(bytes)"
+"194_createPair" -> "type(address)"
+"194_setFeeTo" -> "require(bool,string)"
+"194_setFeeToSetter" -> "require(bool,string)"
+"194_createPair" -> "require(bool,string)"
+"194_createPair" -> "abi.encodePacked()"
+}
+}

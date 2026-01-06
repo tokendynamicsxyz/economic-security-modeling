@@ -1,0 +1,201 @@
+strict digraph {
+rankdir="LR"
+node [shape=box]
+subgraph cluster_194_UniswapV2Factory {
+label = "UniswapV2Factory"
+"194_setFeeToSetter" [label="setFeeToSetter"]
+"194_allPairsLength" [label="allPairsLength"]
+"194_constructor" [label="constructor"]
+"194_createPair" [label="createPair"]
+"194_setFeeTo" [label="setFeeTo"]
+}subgraph cluster_2023_IUniswapV2Pair {
+label = "IUniswapV2Pair"
+"2023_decimals" [label="decimals"]
+"2023_transferFrom" [label="transferFrom"]
+"2023_allowance" [label="allowance"]
+"2023_balanceOf" [label="balanceOf"]
+"2023_factory" [label="factory"]
+"2023_MINIMUM_LIQUIDITY" [label="MINIMUM_LIQUIDITY"]
+"2023_getReserves" [label="getReserves"]
+"2023_approve" [label="approve"]
+"2023_PERMIT_TYPEHASH" [label="PERMIT_TYPEHASH"]
+"2023_kLast" [label="kLast"]
+"2023_permit" [label="permit"]
+"2023_DOMAIN_SEPARATOR" [label="DOMAIN_SEPARATOR"]
+"2023_symbol" [label="symbol"]
+"2023_initialize" [label="initialize"]
+"2023_mint" [label="mint"]
+"2023_price1CumulativeLast" [label="price1CumulativeLast"]
+"2023_sync" [label="sync"]
+"2023_name" [label="name"]
+"2023_skim" [label="skim"]
+"2023_swap" [label="swap"]
+"2023_totalSupply" [label="totalSupply"]
+"2023_price0CumulativeLast" [label="price0CumulativeLast"]
+"2023_transfer" [label="transfer"]
+"2023_token0" [label="token0"]
+"2023_token1" [label="token1"]
+"2023_burn" [label="burn"]
+"2023_nonces" [label="nonces"]
+}subgraph cluster_1767_IERC20 {
+label = "IERC20"
+"1767_transfer" [label="transfer"]
+"1767_transferFrom" [label="transferFrom"]
+"1767_decimals" [label="decimals"]
+"1767_approve" [label="approve"]
+"1767_balanceOf" [label="balanceOf"]
+"1767_allowance" [label="allowance"]
+"1767_name" [label="name"]
+"1767_symbol" [label="symbol"]
+"1767_totalSupply" [label="totalSupply"]
+}subgraph cluster_1298_IUniswapV2Factory {
+label = "IUniswapV2Factory"
+"1298_setFeeTo" [label="setFeeTo"]
+"1298_feeTo" [label="feeTo"]
+"1298_allPairs" [label="allPairs"]
+"1298_allPairsLength" [label="allPairsLength"]
+"1298_getPair" [label="getPair"]
+"1298_setFeeToSetter" [label="setFeeToSetter"]
+"1298_createPair" [label="createPair"]
+"1298_feeToSetter" [label="feeToSetter"]
+}subgraph cluster_2259_IUniswapV2ERC20 {
+label = "IUniswapV2ERC20"
+"2259_transferFrom" [label="transferFrom"]
+"2259_decimals" [label="decimals"]
+"2259_nonces" [label="nonces"]
+"2259_PERMIT_TYPEHASH" [label="PERMIT_TYPEHASH"]
+"2259_symbol" [label="symbol"]
+"2259_transfer" [label="transfer"]
+"2259_allowance" [label="allowance"]
+"2259_totalSupply" [label="totalSupply"]
+"2259_permit" [label="permit"]
+"2259_name" [label="name"]
+"2259_balanceOf" [label="balanceOf"]
+"2259_DOMAIN_SEPARATOR" [label="DOMAIN_SEPARATOR"]
+"2259_approve" [label="approve"]
+}subgraph cluster_1683_UniswapV2ERC20 {
+label = "UniswapV2ERC20"
+"1683_permit" [label="permit"]
+"1683__burn" [label="_burn"]
+"1683__approve" [label="_approve"]
+"1683_transfer" [label="transfer"]
+"1683_constructor" [label="constructor"]
+"1683__mint" [label="_mint"]
+"1683_approve" [label="approve"]
+"1683__transfer" [label="_transfer"]
+"1683_transferFrom" [label="transferFrom"]
+"1683_permit" -> "1683__approve"
+"1683_transfer" -> "1683__transfer"
+"1683_transferFrom" -> "1683__transfer"
+"1683_approve" -> "1683__approve"
+}subgraph cluster_1781_IUniswapV2Callee {
+label = "IUniswapV2Callee"
+"1781_uniswapV2Call" [label="uniswapV2Call"]
+}subgraph cluster_1235_UniswapV2Pair {
+label = "UniswapV2Pair"
+"1235__mintFee" [label="_mintFee"]
+"1235_getReserves" [label="getReserves"]
+"1235_burn" [label="burn"]
+"1235_skim" [label="skim"]
+"1235_initialize" [label="initialize"]
+"1235_sync" [label="sync"]
+"1235__safeTransfer" [label="_safeTransfer"]
+"1235__update" [label="_update"]
+"1235_mint" [label="mint"]
+"1235_swap" [label="swap"]
+"1235_constructor" [label="constructor"]
+"1235_burn" -> "1235_lock"
+"1235_swap" -> "1235_lock"
+"1235_sync" -> "1235__update"
+"1235_skim" -> "1235_lock"
+"1235_swap" -> "1235__safeTransfer"
+"1235_burn" -> "1235__update"
+"1235_mint" -> "1235_lock"
+"1235_mint" -> "1235_getReserves"
+"1235_burn" -> "1235__burn"
+"1235_burn" -> "1235__mintFee"
+"1235_sync" -> "1235_lock"
+"1235__mintFee" -> "1235__mint"
+"1235_mint" -> "1235__mintFee"
+"1235_burn" -> "1235__safeTransfer"
+"1235_swap" -> "1235_getReserves"
+"1235_mint" -> "1235__update"
+"1235_mint" -> "1235__mint"
+"1235_burn" -> "1235_getReserves"
+"1235_swap" -> "1235__update"
+"1235_skim" -> "1235__safeTransfer"
+}subgraph cluster_2099_Math {
+label = "Math"
+"2099_sqrt" [label="sqrt"]
+"2099_min" [label="min"]
+}subgraph cluster_2141_UQ112x112 {
+label = "UQ112x112"
+"2141_uqdiv" [label="uqdiv"]
+"2141_encode" [label="encode"]
+}subgraph cluster_2334_SafeMath {
+label = "SafeMath"
+"2334_add" [label="add"]
+"2334_mul" [label="mul"]
+"2334_sub" [label="sub"]
+}subgraph cluster_solidity {
+label = "[Solidity]"
+"abi.decode()" 
+"type(address)" 
+"abi.encode()" 
+"keccak256(bytes)" 
+"ecrecover(bytes32,uint8,bytes32,bytes32)" 
+"require(bool,string)" 
+"abi.encodeWithSelector()" 
+"abi.encodePacked()" 
+"1235__safeTransfer" -> "require(bool,string)"
+"1683_permit" -> "abi.encode()"
+"2334_mul" -> "require(bool,string)"
+"1683_permit" -> "abi.encodePacked()"
+"194_createPair" -> "abi.encodePacked()"
+"1683_permit" -> "ecrecover(bytes32,uint8,bytes32,bytes32)"
+"1235_initialize" -> "require(bool,string)"
+"1235__safeTransfer" -> "abi.encodeWithSelector()"
+"194_createPair" -> "type(address)"
+"1235__safeTransfer" -> "abi.decode()"
+"1235_mint" -> "require(bool,string)"
+"1683_permit" -> "keccak256(bytes)"
+"1235_swap" -> "require(bool,string)"
+"1683_constructor" -> "abi.encode()"
+"1683_constructor" -> "keccak256(bytes)"
+"2334_add" -> "require(bool,string)"
+"194_setFeeToSetter" -> "require(bool,string)"
+"194_createPair" -> "require(bool,string)"
+"1235__update" -> "require(bool,string)"
+"1683_permit" -> "require(bool,string)"
+"194_createPair" -> "keccak256(bytes)"
+"1235_burn" -> "require(bool,string)"
+"2334_sub" -> "require(bool,string)"
+"194_setFeeTo" -> "require(bool,string)"
+}"1235_swap" -> "2334_mul"
+"1683__transfer" -> "2334_add"
+"1683_transferFrom" -> "2334_sub"
+"1235_swap" -> "1767_balanceOf"
+"1235__update" -> "2141_encode"
+"1235__mintFee" -> "2099_sqrt"
+"1235_mint" -> "1767_balanceOf"
+"1235_sync" -> "1767_balanceOf"
+"1235_mint" -> "2099_sqrt"
+"1683__mint" -> "2334_add"
+"1235_mint" -> "2334_sub"
+"1235__mintFee" -> "1298_feeTo"
+"1235_burn" -> "2334_mul"
+"1683__burn" -> "2334_sub"
+"1235__mintFee" -> "2334_mul"
+"1235_skim" -> "2334_sub"
+"1235_burn" -> "1767_balanceOf"
+"194_createPair" -> "2023_initialize"
+"1235_mint" -> "2099_min"
+"1235_swap" -> "2334_sub"
+"1235_swap" -> "1781_uniswapV2Call"
+"1683__transfer" -> "2334_sub"
+"1235__update" -> "2141_uqdiv"
+"1235_skim" -> "1767_balanceOf"
+"1235__mintFee" -> "2334_add"
+"1235__mintFee" -> "2334_sub"
+"1235_mint" -> "2334_mul"
+}

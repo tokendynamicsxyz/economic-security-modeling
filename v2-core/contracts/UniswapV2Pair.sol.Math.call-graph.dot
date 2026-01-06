@@ -1,0 +1,11 @@
+strict digraph {
+rankdir="LR"
+node [shape=box]
+subgraph cluster_1904_Math {
+label = "Math"
+"1904_sqrt" [label="sqrt"]
+"1904_min" [label="min"]
+}subgraph cluster_solidity {
+label = "[Solidity]"
+}
+}

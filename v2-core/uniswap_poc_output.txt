@@ -1,0 +1,8 @@
+[+] Analyzing contracts/UniswapV2ERC20.sol
+[+] Analyzing contracts/UniswapV2Factory.sol
+[+] Analyzing contracts/UniswapV2Pair.sol
+
+[✓] Wrote slither_dependency_graph.json
+[✓] Wrote slither_dependency_graph.yaml
+[✓] Functions included: 7
+[✓] Edges generated: 68
